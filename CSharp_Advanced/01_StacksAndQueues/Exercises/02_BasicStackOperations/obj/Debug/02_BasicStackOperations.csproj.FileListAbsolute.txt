@@ -1,0 +1,7 @@
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\bin\Debug\02_BasicStackOperations.exe.config
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\bin\Debug\02_BasicStackOperations.exe
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\bin\Debug\02_BasicStackOperations.pdb
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\obj\Debug\02_BasicStackOperations.csprojResolveAssemblyReference.cache
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\obj\Debug\02_BasicStackOperations.csproj.CoreCompileInputs.cache
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\obj\Debug\02_BasicStackOperations.exe
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\02_BasicStackOperations\obj\Debug\02_BasicStackOperations.pdb

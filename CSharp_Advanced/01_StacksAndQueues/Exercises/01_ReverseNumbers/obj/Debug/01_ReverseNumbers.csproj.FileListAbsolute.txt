@@ -1,0 +1,7 @@
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\bin\Debug\01_ReverseNumbers.exe.config
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\bin\Debug\01_ReverseNumbers.exe
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\bin\Debug\01_ReverseNumbers.pdb
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\obj\Debug\01_ReverseNumbers.csprojResolveAssemblyReference.cache
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\obj\Debug\01_ReverseNumbers.csproj.CoreCompileInputs.cache
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\obj\Debug\01_ReverseNumbers.exe
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\01_ReverseNumbers\obj\Debug\01_ReverseNumbers.pdb

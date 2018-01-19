@@ -1,0 +1,7 @@
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\bin\Debug\03_MaximumElement.exe.config
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\bin\Debug\03_MaximumElement.exe
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\bin\Debug\03_MaximumElement.pdb
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\obj\Debug\03_MaximumElement.csprojResolveAssemblyReference.cache
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\obj\Debug\03_MaximumElement.csproj.CoreCompileInputs.cache
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\obj\Debug\03_MaximumElement.exe
+C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\03_MaximumElement\obj\Debug\03_MaximumElement.pdb
