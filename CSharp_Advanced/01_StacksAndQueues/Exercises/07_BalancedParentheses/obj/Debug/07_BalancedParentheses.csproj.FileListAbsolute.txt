@@ -1,0 +1,7 @@
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\bin\Debug\07_BalancedParentheses.exe.config
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\bin\Debug\07_BalancedParentheses.exe
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\bin\Debug\07_BalancedParentheses.pdb
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\obj\Debug\07_BalancedParentheses.csprojResolveAssemblyReference.cache
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\obj\Debug\07_BalancedParentheses.csproj.CoreCompileInputs.cache
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\obj\Debug\07_BalancedParentheses.exe
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\07_BalancedParentheses\obj\Debug\07_BalancedParentheses.pdb

@@ -1,0 +1,7 @@
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\bin\Debug\09_StackFibonacci.exe.config
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\bin\Debug\09_StackFibonacci.exe
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\bin\Debug\09_StackFibonacci.pdb
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\obj\Debug\09_StackFibonacci.csproj.CoreCompileInputs.cache
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\obj\Debug\09_StackFibonacci.exe
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\obj\Debug\09_StackFibonacci.pdb
+C:\Users\Antonia\Desktop\CSharp_Fundmentals\CSharp-Fundamentals\CSharp_Advanced\01_StacksAndQueues\Exercises\09_StackFibonacci\obj\Debug\09_StackFibonacci.csprojResolveAssemblyReference.cache

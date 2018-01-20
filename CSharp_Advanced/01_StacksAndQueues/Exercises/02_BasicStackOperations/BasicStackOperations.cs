@@ -48,6 +48,7 @@
             if (numbersStack.Count == 0)
             {
                 Console.WriteLine(0);
+                return;
             }
 
             if (numbersStack.Contains(x))
