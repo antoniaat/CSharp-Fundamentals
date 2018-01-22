@@ -9,7 +9,7 @@
         public static void Main()
         {
             var input = Console.ReadLine()
-                .Split(new char []{' '}, StringSplitOptions.RemoveEmptyEntries)
+                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse).ToArray();
 
             var numbers = new Stack<int>();

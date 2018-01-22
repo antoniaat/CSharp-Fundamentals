@@ -55,7 +55,6 @@ namespace _04_BasicQueueOperations
             {
                 Console.WriteLine("true");
             }
-
             else
             {
                 Console.WriteLine(numbersStack.Min());

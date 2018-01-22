@@ -4,7 +4,7 @@
 
     public class RecursiveFibonacci
     {
-        static long[] numbers;
+        public static long[] numbers;
 
         public static void Main()
         {
@@ -13,12 +13,13 @@
             Console.WriteLine(recursiveFibonacci(n));
         }
 
-        private static long recursiveFibonacci(int n)
+        public static long recursiveFibonacci(int n)
         {
-            if (n <= 1)
+            if (n <= 2)
             {
                 return 1;
             }
+
             if (numbers[n] != 0)
             {
                 return numbers[n];
@@ -26,6 +27,7 @@
 
             numbers[n] =
                 recursiveFibonacci(n - 1) +
+
                 recursiveFibonacci(n - 2);
             return numbers[n];
         }

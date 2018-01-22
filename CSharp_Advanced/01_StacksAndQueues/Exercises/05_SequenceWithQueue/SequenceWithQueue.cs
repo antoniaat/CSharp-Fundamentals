@@ -7,9 +7,8 @@
     {
         public static void Main()
         {
-            var n = int.Parse(Console.ReadLine());
-            var seq = new List<int>();
-
+            var n = long.Parse(Console.ReadLine());
+            var seq = new List<long>();
             var s1 = n;
             seq.Add(s1);
 

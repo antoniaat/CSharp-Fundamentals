@@ -3,27 +3,26 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Numerics;
 
     public class MaximumElement
     {
         public static void Main()
         {
-            var numbersStack = new Stack<BigInteger>();
-            var n = BigInteger.Parse(Console.ReadLine());
+            var numbersStack = new Stack<int>();
+            var n = long.Parse(Console.ReadLine());
 
             for (var i = 0; i < n; i++)
             {
                 var currentCommand = Console.ReadLine()
                     .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(BigInteger.Parse)
+                    .Select(int.Parse)
                     .ToList();
 
                 CheckType(currentCommand, numbersStack);
             }
         }
 
-        public static void CheckType(List<BigInteger> currentCommand, Stack<BigInteger> numbersStack)
+        public static void CheckType(List<int> currentCommand, Stack<int> numbersStack)
         {
             if (currentCommand[0] == 1)
             {

@@ -11,17 +11,35 @@
         {
             var sb = new StringBuilder();
             var operationsNumber = int.Parse(Console.ReadLine());
-            var beforeLastOperation = string.Empty;
+            var undonedOperations = new List<string>();
 
-            for (var i = 0; i < operationsNumber; i++)
+            for (var operation = 0; operation < operationsNumber; operation++)
             {
-                var command = Console.ReadLine();
+                var command = Console.ReadLine().Trim();
 
                 if (command == "4")
                 {
-                    sb.Clear();
-                    sb.Append(beforeLastOperation);
+                    var lastOperation = undonedOperations.Last()
+                        .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                        .ToList();
+
+                    if (lastOperation[0] == "1")
+                    {
+                        for (var j = 0; j < lastOperation[1].Length; j++)
+                        {
+                            sb.Remove(sb.Length - 1, 1);
+                        }
+
+                        undonedOperations.RemoveAt(undonedOperations.Count - 1);
+                    }
+
+                    else if (lastOperation[0] == "2")
+                    {
+                        sb.Append(lastOperation[1]);
+                        undonedOperations.RemoveAt(undonedOperations.Count - 1);
+                    }
                 }
+
                 else
                 {
                     var commandLineArray = command
@@ -32,25 +50,26 @@
 
                     if (operationNum == 1)
                     {
-                        beforeLastOperation = sb.ToString();
                         FirstOperation(commandLineArray, sb);
+                        undonedOperations.Add(command);
                     }
+
                     else if (operationNum == 2)
                     {
-                        beforeLastOperation = sb.ToString();
+                        var removedLetterStringBuilder = new StringBuilder();
+                        var removedLetters = removedLetterStringBuilder.Append(sb); 
+                        command = "2 " + removedLetters;
+                        undonedOperations.Add(command);
                         SecondOperation(commandLineArray, sb);
+                        removedLetterStringBuilder.Clear();
                     }
+
                     else if (operationNum == 3)
                     {
                         ThirdOperation(commandLineArray, sb);
                     }
                 }
             }
-        }
-
-        public static void UndoesTheLastCommand(string command, StringBuilder sb)
-        {
-
         }
 
         public static void ThirdOperation(List<string> commandLineArray, StringBuilder sb)
