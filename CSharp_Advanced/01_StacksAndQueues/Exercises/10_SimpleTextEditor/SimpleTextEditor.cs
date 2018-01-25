@@ -2,97 +2,66 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     public class SimpleTextEditor
     {
         public static void Main()
         {
-            var sb = new StringBuilder();
-            var operationsNumber = int.Parse(Console.ReadLine());
-            var undonedOperations = new List<string>();
+            var n = int.Parse(Console.ReadLine());
+            var text = new StringBuilder();
+            var history = new Stack<string>();
 
-            for (var operation = 0; operation < operationsNumber; operation++)
+            for (var i = 0; i < n; i++)
             {
-                var command = Console.ReadLine().Trim();
+                var input = Console.ReadLine()
+                    .Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-                if (command == "4")
+                var command = int.Parse(input[0]);
+
+                switch (command)
                 {
-                    var lastOperation = undonedOperations.Last()
-                        .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                        .ToList();
-
-                    if (lastOperation[0] == "1")
-                    {
-                        for (var j = 0; j < lastOperation[1].Length; j++)
+                    case 1: // 1 someString - appends someString to the end of the text
+                        if (input.Length > 1)
                         {
-                            sb.Remove(sb.Length - 1, 1);
+                            history.Push(text.ToString());
+                            text.Append(input[1]);
+                        }
+                        break;
+
+                    case 2: // 2 count - erases the last count elements from the text
+                        if (input.Length > 1)
+                        {
+                            var count = int.Parse(input[1]);
+                            history.Push(text.ToString());
+
+                            if (count > text.Length)
+                            {
+                                text.Clear();
+                                break;
+                            }
+                            text.Remove(text.Length - count, count);
                         }
 
-                        undonedOperations.RemoveAt(undonedOperations.Count - 1);
-                    }
+                        break;
 
-                    else if (lastOperation[0] == "2")
-                    {
-                        sb.Append(lastOperation[1]);
-                        undonedOperations.RemoveAt(undonedOperations.Count - 1);
-                    }
-                }
+                    case 3: // 3 index - returns the element at position index from the text
+                        if (input.Length > 1)
+                        {
+                            var index = int.Parse(input[1]);
+                            if (index <= text.Length && index > 0)
+                                Console.WriteLine(text[index - 1]);
+                        }
 
-                else
-                {
-                    var commandLineArray = command
-                        .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                        .ToList();
+                        break;
 
-                    var operationNum = int.Parse(commandLineArray[0]);
-
-                    if (operationNum == 1)
-                    {
-                        FirstOperation(commandLineArray, sb);
-                        undonedOperations.Add(command);
-                    }
-
-                    else if (operationNum == 2)
-                    {
-                        var removedLetterStringBuilder = new StringBuilder();
-                        var removedLetters = removedLetterStringBuilder.Append(sb); 
-                        command = "2 " + removedLetters;
-                        undonedOperations.Add(command);
-                        SecondOperation(commandLineArray, sb);
-                        removedLetterStringBuilder.Clear();
-                    }
-
-                    else if (operationNum == 3)
-                    {
-                        ThirdOperation(commandLineArray, sb);
-                    }
+                    case 4:
+                        // 4 - undoes the last not undone command of type 1 / 2 and returns the text to the state before that operation
+                        text.Clear();
+                        text.Append(history.Pop());
+                        break;
                 }
             }
-        }
-
-        public static void ThirdOperation(List<string> commandLineArray, StringBuilder sb)
-        {
-            var index = int.Parse(commandLineArray[1]);
-            index--;
-            Console.WriteLine(sb[index]);
-        }
-
-        public static void SecondOperation(List<string> commandLineArray, StringBuilder sb)
-        {
-            var count = int.Parse(commandLineArray[1]);
-
-            for (var i = 0; i < count; i++)
-            {
-                sb.Remove(sb.Length - 1, 1);
-            }
-        }
-
-        public static void FirstOperation(List<string> commandLineArray, StringBuilder sb)
-        {
-            var text = commandLineArray[1];
-            sb.Append(text);
         }
     }
 }
