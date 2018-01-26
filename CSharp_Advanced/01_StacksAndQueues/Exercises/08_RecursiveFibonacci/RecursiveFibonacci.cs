@@ -1,4 +1,4 @@
-﻿namespace _08_RecursiveFibonacci
+namespace _08_RecursiveFibonacci
 {
     using System;
 
@@ -16,19 +16,13 @@
         public static long recursiveFibonacci(int n)
         {
             if (n <= 2)
-            {
                 return 1;
-            }
 
             if (numbers[n] != 0)
-            {
                 return numbers[n];
-            }
 
-            numbers[n] =
-                recursiveFibonacci(n - 1) +
-
-                recursiveFibonacci(n - 2);
+            numbers[n] = recursiveFibonacci(n - 1) + recursiveFibonacci(n - 2);
+            
             return numbers[n];
         }
     }
