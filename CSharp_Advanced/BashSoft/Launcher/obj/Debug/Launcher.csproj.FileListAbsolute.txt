@@ -1,7 +1,0 @@
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\bin\Debug\Launcher.exe.config
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\bin\Debug\Launcher.exe
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\bin\Debug\Launcher.pdb
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\obj\Debug\Launcher.csprojResolveAssemblyReference.cache
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\obj\Debug\Launcher.csproj.CoreCompileInputs.cache
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\obj\Debug\Launcher.exe
-C:\Users\Antonia\Documents\GitHub\CSharp-Fundamentals\CSharp_Advanced\BashSoft\Launcher\obj\Debug\Launcher.pdb
