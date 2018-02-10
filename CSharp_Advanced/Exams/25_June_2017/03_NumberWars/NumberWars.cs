@@ -2,97 +2,104 @@
 {
     using System;
     using System.Linq;
+    using System.Collections.Generic;
 
     public class NumberWars
     {
         public static void Main()
         {
-            var matrixDimensions = int.Parse(Console.ReadLine());
-            var matrix = CreateMatrix(matrixDimensions);
-            Console.WriteLine(KnightGame(matrix, matrixDimensions));
-        }
+            var firstAllCards = new Queue<string>(Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            var secondAllCards = new Queue<string>(Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
 
-        public static int KnightGame(char[,] matrix, int matrixDimensions)
-        {
-            var bestPower = 0;
-            var removedKnights = 0;
-            var bestKnight = string.Empty;
+            var turnsCounter = 0;
+            var gameOver = false;
 
-            while (true)
+            while (!gameOver && turnsCounter < 1000000 && firstAllCards.Count != 0 && secondAllCards.Count != 0)
             {
-                for (var col = 0; col < matrixDimensions; col++)
+                turnsCounter++;
+
+                var firstPlayerCard = firstAllCards.Dequeue();
+                var secondPlayerCard = secondAllCards.Dequeue();
+
+                var firstValue = GetNumberValue(firstPlayerCard);
+                var secondValue = GetNumberValue(secondPlayerCard);
+
+                if (firstValue > secondValue)
                 {
-                    for (var row = 0; row < matrixDimensions; row++)
+                    firstAllCards.Enqueue(firstPlayerCard);
+                    firstAllCards.Enqueue(secondPlayerCard);
+                }
+                else if (secondValue > firstValue)
+                {
+                    secondAllCards.Enqueue(secondPlayerCard);
+                    secondAllCards.Enqueue(firstPlayerCard);
+                }
+                else
+                {
+                    var winnersHand = new List<string> { firstPlayerCard, secondPlayerCard };
+
+                    while (true)
                     {
-                        if (matrix[col, row] != 'K') continue;
-                        var currentPower = 0;
-
-                        if (col + 1 >= 0 && row + 2 >= 0 && col + 1 < matrixDimensions && row + 2 < matrixDimensions)
+                        if (firstAllCards.Count < 3 || secondAllCards.Count < 3)
                         {
-                            if(matrix[col + 1, row + 2] == 'K') currentPower++;
-                        }
-                        if (col + 1 >= 0 && row - 2 >= 0 && col + 1 < matrixDimensions && row - 2 < matrixDimensions)
-                        {
-                            if(matrix[col + 1, row - 2] == 'K') currentPower++;
-                        }
-                        if (col + 2 >= 0 && row + 1 >= 0 && col + 2 < matrixDimensions && row + 1 < matrixDimensions)
-                        {
-                            if(matrix[col + 2, row + 1] == 'K') currentPower++;
-                        }
-                        if (col + 2 >= 0 && row - 1 >= 0 && col + 2 < matrixDimensions && row - 1 < matrixDimensions)
-                        {
-                            if(matrix[col + 2, row - 1] == 'K') currentPower++;
-                        }
-                        if (col - 1 >= 0 && row + 2 >= 0 && col - 1 < matrixDimensions && row + 2 < matrixDimensions)
-                        {
-                            if(matrix[col - 1, row + 2] == 'K') currentPower++;
-                        }
-                        if (col - 1 >= 0 && row - 2 >= 0 && col - 1 < matrixDimensions && row - 2 < matrixDimensions)
-                        {
-                            if(matrix[col - 1, row - 2] == 'K') currentPower++;
-                        }
-                        if (col - 2 >= 0 && row + 1 >= 0 && col - 2 < matrixDimensions && row + 1 < matrixDimensions)
-                        {
-                            if(matrix[col - 2, row + 1] == 'K') currentPower++;
-                        }
-                        if (col - 2 >= 0 && row - 1 >= 0 && col - 2 < matrixDimensions && row - 1 < matrixDimensions)
-                        {
-                            if(matrix[col - 2, row - 1] == 'K' ) currentPower++;
+                            gameOver = true;
+                            break;
                         }
 
-                        if (currentPower <= bestPower) continue;
-                        bestPower = currentPower;
-                        bestKnight = $"{col} {row}";
+                        var firstSum = 0;
+                        var secondSum = 0;
+
+                        for (var i = 0; i < 3; i++)
+                        {
+                            firstSum += GetCharValue(firstAllCards.Peek());
+                            secondSum += GetCharValue(secondAllCards.Peek());
+
+                            winnersHand.Add(firstAllCards.Dequeue());
+                            winnersHand.Add(secondAllCards.Dequeue());
+                        }
+
+                        if (firstSum > secondSum)
+                        {
+                            foreach (var card in winnersHand.OrderByDescending(GetNumberValue).ThenByDescending(GetCharValue))
+                            {
+                                firstAllCards.Enqueue(card);
+                            }
+                            break;
+                        }
+                        else if (secondSum > firstSum)
+                        {
+                            foreach (var card in winnersHand.OrderByDescending(GetNumberValue).ThenByDescending(GetCharValue))
+                            {
+                                secondAllCards.Enqueue(card);
+                            }
+                            break;
+                        }
                     }
                 }
-
-                if (bestPower > 0)
-                {
-                    var tokens = bestKnight.Split(' ').Select(int.Parse).ToArray();
-                    matrix[tokens[0], tokens[1]] = '0';
-                    removedKnights++;
-                    bestPower = 0;
-                }
-
-                else return removedKnights;
             }
+
+            var winner = GetWinner(firstAllCards, secondAllCards);
+            Console.WriteLine($"{winner} after {turnsCounter} turns");
         }
 
-        public static char[,] CreateMatrix(int matrixDimensions)
+        private static int GetCharValue(string v)
         {
-            var matrix = new char[matrixDimensions, matrixDimensions];
+            return v.Last();
+        }
 
-            for (var col = 0; col < matrixDimensions; col++)
-            {
-                var currentLine = Console.ReadLine().ToCharArray();
+        private static int GetNumberValue(string firstPlayerCard)
+        {
+            return int.Parse(firstPlayerCard.Substring(0, firstPlayerCard.Length - 1));
+        }
 
-                for (var row = 0; row < matrixDimensions; row++)
-                {
-                    matrix[col, row] = currentLine[row];
-                }
-            }
-
-            return matrix;
+        private static string GetWinner(Queue<string> firstAllCards, Queue<string> secondAllCards)
+        {
+            if (firstAllCards.Count > secondAllCards.Count)
+                return "First player wins";
+            if (secondAllCards.Count > firstAllCards.Count)
+                return "Second player wins";
+            else
+                return "Draw";
         }
     }
 }
