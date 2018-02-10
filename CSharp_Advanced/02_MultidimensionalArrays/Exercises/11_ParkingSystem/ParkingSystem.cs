@@ -1,82 +1,67 @@
 ﻿namespace _11_ParkingSystem
 {
     using System;
-    using System.Linq;
 
     public class ParkingSystem
     {
         public static void Main()
         {
-            var dimensions = Console.ReadLine()
-                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToArray();
+            var input = Console.ReadLine().Split();
+            var rows = int.Parse(input[0]);
+            var columns = int.Parse(input[1]);
+            var matrix = new byte[rows][];             
+            var command = string.Empty;
 
-            var columns = dimensions[0];
-            var rows = dimensions[1];
-            var matrix = new bool[columns, rows];
-
-            CreateAndFillTheMatrix(matrix, columns, rows);
-            ReadLines(matrix);
-
-            Console.WriteLine();
+            ReadCommands(command, matrix, input, rows, columns);
         }
 
-        public static void ReadLines(bool[,] matrix)
+        private static void ReadCommands(string command, byte[][] matrix, string[] input, int rows, int columns)
         {
-            string currentLine;
-            while ((currentLine = Console.ReadLine()) != "stop")
+            while ((command = Console.ReadLine()) != "stop")
             {
-                var tokens = currentLine.Split(new char[] {' '})
-                    .Select(int.Parse)
-                    .ToList();
+                var data = command.Split();
+                var entrance = int.Parse(data[0]);
+                var row = int.Parse(data[1]);
+                var col = int.Parse(data[2]);
 
-                var entryCol = tokens[0];
-                var parkingColumn = tokens[1];
-                var parkingRow = tokens[2];
+                var steps = Math.Abs(entrance - row) + 1;                            // initial steps in first (0) column
+                if (matrix[row] == null) matrix[row] = new byte[columns];                // if current array is empty
 
-                Parking(matrix, entryCol, parkingColumn, parkingRow);
-            }
-        }
-
-        public static void Parking(bool[,] matrix, int entryCol, int parkingColumn, int parkingRow)
-        {
-            var counter = 0;
-
-            for (var col = entryCol; col < parkingColumn; col++)
-            {
-                counter++;
-            }
-
-            for (var row = 0; row < parkingRow; row++)
-            {
-                counter++;
-
-                if (row == parkingRow && matrix[parkingColumn, row])
+                if (matrix[row][col] == 0)
                 {
-                    matrix[parkingColumn, parkingRow] = false;
+                    matrix[row][col] = 1;
+                    steps += col;                           // add steps in the row to the initial steps
+                    Console.WriteLine(steps);
                 }
-                else if (matrix[parkingColumn, row-1])
+                else
                 {
-                    row--;
-                }
-                else if (matrix[parkingColumn, row + 1])
-                {
-                    row++;
-                }
-            }
-        }
+                    var cnt = 1;                            // counter for cells
+                    while (true)
+                    {
+                        var lowerCell = col - cnt;
+                        var upperCell = col + cnt;
 
-        public static void CreateAndFillTheMatrix(bool[,] matrix, int columns, int rows)
-        {
-            // free = true
-
-            for (var col = 0; col < columns; col++)
-            {
-                for (var row = 0; row < rows; row++)
-                {
-                    if (row == 0) matrix[col, row] = false;
-                    else matrix[col, row] = true;
+                        if (lowerCell < 1 && upperCell > columns - 1)  // if cells are out of bounds
+                        {
+                            Console.WriteLine($"Row {row} full");
+                            break;
+                        }
+                        if (lowerCell > 0 && matrix[row][lowerCell] == 0)       // if cell is inside of the row
+                        {                                                       // and free
+                            matrix[row][lowerCell] = 1;
+                            steps += lowerCell;
+                            Console.WriteLine(steps);
+                            break;
+                        }
+                        if (upperCell < columns && matrix[row][upperCell] == 0) // if cell is inside of the row
+                        {                                                        // and is free
+                            matrix[row][upperCell] = 1;
+                            steps += upperCell;
+                            Console.WriteLine(steps);
+                            break;
+                        }
+                        cnt++;
+                    }
                 }
             }
         }

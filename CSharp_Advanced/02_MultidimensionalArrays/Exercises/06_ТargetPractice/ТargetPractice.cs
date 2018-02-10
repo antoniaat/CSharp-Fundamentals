@@ -7,135 +7,127 @@
     {
         public static void Main()
         {
-            var inputLine = Console.ReadLine()
-                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToArray();
+            var dimensions = Console.ReadLine().Split();
+            var snake = Console.ReadLine();
+            var shotParameters = Console.ReadLine().Split();
 
-            var rows = inputLine[0];
-            var columns = inputLine[1];
-            var matrix = new char[rows, columns];
-            var snakeName = Console.ReadLine();
-            var shotsRowAndColumn = Console.ReadLine()
-                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToArray();
-            var shotRow = shotsRowAndColumn[0];
-            var shotColumn = shotsRowAndColumn[1];
-            var shotRadius = shotsRowAndColumn[2];
+            var numberOfRows = int.Parse(dimensions[0]);
+            var numberOfColumns = int.Parse(dimensions[1]);
 
-            CreateMatrix(rows, columns, matrix, snakeName);
-            EliminateSnakes(matrix, shotRow, shotColumn, shotRadius, rows, columns);
-            FallingDownCharacter(matrix, rows, columns);
-            PrintMatrix(matrix, rows, columns);
+            var impactRow = int.Parse(shotParameters[0]);
+            var impactCol = int.Parse(shotParameters[1]);
+            var shotRadius = int.Parse(shotParameters[2]);
+
+            var matrix = new char[numberOfRows][];
+
+            FillMatrix(snake, matrix, numberOfColumns);
+
+            FireAShot(matrix, impactRow, impactCol, shotRadius);
+
+            DropCharacters(matrix);
+
+            PrintMatrix(matrix);
         }
 
-        public static void PrintMatrix(char[,] matrix, int rows, int columns)
+        private static void FillMatrix(string snake, char[][] matrix, int matrixWidth)
         {
-            for (var row = 0; row < rows; row++)
+            for (var i = 0; i < matrix.Length; i++)
             {
-                for (var col = 0; col < columns; col++)
+                matrix[i] = new char[matrixWidth];
+            }
+
+            var isMovingLeft = true;
+            var currentSymbolIndex = 0;
+
+            for (var row = matrix.Length - 1; row >= 0; row--)
+            {
+                var col = isMovingLeft ? matrixWidth - 1 : 0;
+                var colUpdate = isMovingLeft ? -1 : 1;
+
+                while (0 <= col && col < matrixWidth)
                 {
-                    Console.Write(matrix[row, col]);
+                    if (currentSymbolIndex >= snake.Length)
+                    {
+                        currentSymbolIndex = 0;
+                    }
+
+                    matrix[row][col] = snake[currentSymbolIndex];
+
+                    currentSymbolIndex++;
+                    col += colUpdate;
                 }
+
+                isMovingLeft = !isMovingLeft;
+            }
+        }
+
+        private static void FireAShot(char[][] matrix, int impactRow, int impactCol, int shotRadius)
+        {
+            var matrixWidth = matrix[0].Length;
+
+            for (var row = 0; row < matrix.Length; row++)
+            {
+                for (var col = 0; col < matrixWidth; col++)
+                {
+                    if (IsInsideRadius(row, col, impactRow, impactCol, shotRadius))
+                    {
+                        matrix[row][col] = ' ';
+                    }
+                }
+            }
+        }
+
+        private static bool IsInsideRadius(int checkRow, int checkCol, int impactRow, int impactCol, int shotRadius)
+        {
+            var deltaRow = checkRow - impactRow;
+            var deltaCol = checkCol - impactCol;
+            var isInRadius = deltaRow * deltaRow + deltaCol * deltaCol <= shotRadius * shotRadius;
+
+            return isInRadius;
+        }
+
+        private static void DropCharacters(char[][] matrix)
+        {
+            var width = matrix[0].Length;
+
+            for (var row = matrix.Length - 1; row >= 0; row--)
+            {
+                for (var column = 0; column < width; column++)
+                {
+                    if (matrix[row][column] != ' ')
+                    {
+                        continue;
+                    }
+
+                    int currentRow = row - 1;
+                    while (currentRow >= 0)
+                    {
+                        if (matrix[currentRow][column] != ' ')
+                        {
+                            matrix[row][column] = matrix[currentRow][column];
+                            matrix[currentRow][column] = ' ';
+                            break;
+                        }
+
+                        currentRow--;
+                    }
+                }
+            }
+        }
+
+        private static void PrintMatrix(char[][] matrix)
+        {
+            var matrixWidth = matrix[0].Length;
+
+            foreach (var ch in matrix)
+            {
+                for (var col = 0; col < matrixWidth; col++)
+                {
+                    Console.Write(ch[col]);
+                }
+
                 Console.WriteLine();
             }
-        }
-
-        public static void FallingDownCharacter(char[,] matrix, int rows, int columns)
-        {
-            for (var i = 0; i < 100; i++)
-            {
-                for (var row = 0; row < rows - 1; row++)
-                {
-                    for (var col = 0; col < columns; col++)
-                    {
-                        if (matrix[row + 1, col] == ' ')
-                        {
-                            matrix[row + 1, col] = matrix[row, col];
-                            matrix[row, col] = ' ';
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void EliminateSnakes(char[,] matrix, int shotRow, int shotColumn, int shotRadius, int rows, int columns)
-        {
-            for (var row = 0; row < rows; row++)
-            {
-                for (var col = 0; col < columns; col++)
-                {
-                    if (row == shotRow && col == shotColumn)
-                    {
-                        if (shotRadius == 0)
-                        {
-                            matrix[row, col] = ' ';
-                            return;
-                        }
-
-                        try
-                        {
-                            matrix[row, col] = ' ';
-
-                            //Remove Up, Down, Left and Right snakes
-                            for (var i = 1; i <= shotRadius; i++)
-                            {
-                                matrix[row - i, col] = ' ';
-                                matrix[row + i, col] = ' ';
-                                matrix[row, col - i] = ' ';
-                                matrix[row, col + i] = ' ';
-                            }
-
-                            //Remove snakes at diagonals
-                            matrix[row - 1, col + 1] = ' ';
-                            matrix[row + 1, col - 1] = ' ';
-                            matrix[row + 1, col + 1] = ' ';
-                            matrix[row - 1, col - 1] = ' ';
-
-                            return;
-                        }
-                        catch (Exception)
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void CreateMatrix(int rows, int columns, char[,] matrix, string snakeName)
-        {
-            var copyOfTheName = snakeName;
-
-            for (var row = matrix.GetLength(0) - 1; row >= 0; row--)
-            {
-                if (row % 2 == 0)
-                {
-                    for (var col = matrix.GetLength(1) - 1; col >= 0; col--)
-                    {
-                        snakeName = FillMatrix(copyOfTheName, snakeName, matrix, row, col);
-                    }
-                }
-                else
-                {
-                    for (var col = 0; col < matrix.GetLength(1); col++)
-                    {
-                        snakeName = FillMatrix(copyOfTheName, snakeName, matrix, row, col);
-                    }
-                }
-            }
-        }
-
-        public static string FillMatrix(string copyOfTheName, string snakeName, char[,] matrix, int row, int col)
-        {
-            if (snakeName.Length == 0)
-            {
-                snakeName = copyOfTheName;
-            }
-            matrix[row, col] = snakeName.First();
-
-            return snakeName = snakeName.Substring(1);
         }
     }
 }
