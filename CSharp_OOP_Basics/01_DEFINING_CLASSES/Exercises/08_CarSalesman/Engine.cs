@@ -1,8 +1,8 @@
 ﻿internal class Engine
 {
     private string model;
-    private int power;
-    private int displacement;
+    private string power;
+    private string displacement;
     private string efficiency;
 
     public Engine(string model, int power)

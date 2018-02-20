@@ -22,57 +22,7 @@ public class StartUp
             AddCars(cars, engines);
         }
 
-        CheckForEmptyFields(cars);
-        PrintCars(cars);
-    }
-
-    private static void PrintCars(List<Car> cars)
-    {
-        foreach (var car in cars)
-        {
-            if (car.Weight == 0)
-            {
-                if (car.Engine.Displacement == 0)
-                {
-                    Console.WriteLine(
-                        $"{car.Model}: \n  {car.Engine.Model}: \n    Power: {car.Engine.Power} \n    Displacement: n/a \n    Efficiency: {car.Engine.Efficiency} \n  Weight: n/a \n  Color: {car.Color}");
-                    continue;
-                }
-                Console.WriteLine(
-                    $"{car.Model}: \n  {car.Engine.Model}: \n    Power: {car.Engine.Power} \n    Displacement: {car.Engine.Displacement} \n    Efficiency: {car.Engine.Efficiency} \n  Weight: n/a \n  Color: {car.Color}");
-                continue;
-            }
-
-            if (car.Engine.Displacement == 0)
-            {
-                if (car.Weight == 0)
-                {
-                    Console.WriteLine(
-                        $"{car.Model}: \n  {car.Engine.Model}: \n    Power: {car.Engine.Power} \n    Displacement: n/a \n    Efficiency: {car.Engine.Efficiency} \n  Weight: n/a \n  Color: {car.Color}");
-                    continue;
-                }
-                Console.WriteLine(
-                    $"{car.Model}: \n  {car.Engine.Model}: \n    Power: {car.Engine.Power} \n    Displacement: n/a \n    Efficiency: {car.Engine.Efficiency} \n  Weight: {car.Weight} \n  Color: {car.Color}");
-                continue;
-            }
-
-            Console.WriteLine(car);
-        }
-    }
-
-    private static void CheckForEmptyFields(List<Car> cars)
-    {
-        foreach (var car in cars)
-        {
-            if (car.Color == null)
-            {
-                car.Color = "n/a";
-            }
-            if (car.Engine.Efficiency == null)
-            {
-                car.Engine.Efficiency = "n/a";
-            }
-        }
+        cars.ForEach(Console.WriteLine);
     }
 
     private static void AddCars(List<Car> cars, List<Engine> engines)

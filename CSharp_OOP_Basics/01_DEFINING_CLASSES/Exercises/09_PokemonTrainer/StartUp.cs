@@ -1,12 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class StartUp
 {
+    private const int StartingBadges = 0;
+
     public static void Main()
     {
         var trainers = new List<Trainer>();
 
+        AddTrainersAndPokemons(trainers);
+        ReadCommands(trainers);
+        PrintTrainers(trainers);
+    }
+
+    private static void PrintTrainers(List<Trainer> trainers)
+    {
+        foreach (var trainer in trainers.OrderByDescending(x => x.Badges))
+        {
+            Console.WriteLine($"{trainer.Name} {trainer.Badges} {trainer.Pokemons.Count}");
+        }
+    }
+
+    private static void ReadCommands(List<Trainer> trainers)
+    {
+        string command;
+        while ((command = Console.ReadLine()) != "End")
+        {
+            if (command == "Fire")
+            {
+                foreach (var trainer in trainers)
+                {
+                    trainer.Pokemons.RemoveAll(x => x.Health <= 0);
+
+                    if (trainer.Pokemons.Any(x => x.Element == command))
+                    {
+                        trainer.Badges++;
+                    }
+
+                    LoseHealth(trainer);
+                }
+            }
+            else if (command == "Water")
+            {
+                foreach (var trainer in trainers)
+                {
+                    trainer.Pokemons.RemoveAll(x => x.Health <= 0);
+
+                    if (trainer.Pokemons.Any(x => x.Element == command))
+                    {
+                        trainer.Badges++;
+                    }
+
+                    LoseHealth(trainer);
+                }
+            }
+            else if (command == "Electricity")
+            {
+                foreach (var trainer in trainers)
+                {
+                    trainer.Pokemons.RemoveAll(x => x.Health <= 0);
+
+                    if (trainer.Pokemons.Any(x => x.Element == command))
+                    {
+                        trainer.Badges++;
+                    }
+
+                    LoseHealth(trainer);
+                }
+            }
+        }
+    }
+
+    private static void LoseHealth(Trainer trainer)
+    {
+        if (trainer.Badges == 0)
+        {
+            trainer.Pokemons.ForEach(x => x.Health -= 10);
+        }
+    }
+
+    private static void AddTrainersAndPokemons(List<Trainer> trainers)
+    {
         string inputLine;
         while ((inputLine = Console.ReadLine()) != "Tournament")
         {
@@ -18,33 +94,15 @@ public class StartUp
             var pokemonHealth = int.Parse(tokens[3]);
 
             var pokemon = new Pokemon(pokemonName, pokemonElement, pokemonHealth);
-            var trainer = new Trainer(trainerName, 0, new List<Pokemon>());
+            var trainer = trainers.FirstOrDefault(t => t.Name == trainerName);
 
-            if (trainers.Contains(trainer))
+            if (trainer == null)
             {
-                
+                trainer = new Trainer(trainerName, StartingBadges);
+                trainers.Add(trainer);
             }
-            else
-            {
-                trainers.Add(new Trainer(trainerName, 0, new List<Pokemon>()));
-            }
-        }
 
-        string command;
-        while ((command = Console.ReadLine()) != "End")
-        {
-            if (command == "Fire")
-            {
-
-            }
-            else if (command == "Water")
-            {
-
-            }
-            else if (command == "Electricity")
-            {
-
-            }
+            trainer.Pokemons.Add(pokemon);
         }
     }
 }

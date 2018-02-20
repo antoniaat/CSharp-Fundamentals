@@ -2,7 +2,7 @@
 {
     private string model;
     private Engine engine;
-    private int weight;
+    private string weight;
     private string color;
 
     public Car(string model, Engine engine)
@@ -40,6 +40,11 @@
 
     public override string ToString()
     {
-        return $"{this.Model}: \n  {Engine.Model}: \n    Power: {Engine.Power} \n    Displacement: {Engine.Displacement} \n    Efficiency: {Engine.Efficiency} \n  Weight: {this.Weight} \n  Color: {this.Color}";
+        var weightStr = Weight == 0 ? "n/a" : this.Weight.ToString();
+        var displacement = Engine.Displacement == 0 ? "n/a" : Engine.Displacement.ToString();
+        var color = Color ?? "n/a";
+        var efficiency = Engine.Efficiency ?? "n/a";
+
+        return $"{this.Model}: \n  {Engine.Model}: \n    Power: {Engine.Power} \n    Displacement: {displacement} \n    Efficiency: {efficiency} \n  Weight: {weightStr} \n  Color: {color}";
     }
 }
