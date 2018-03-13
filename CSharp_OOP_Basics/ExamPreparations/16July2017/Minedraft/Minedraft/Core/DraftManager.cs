@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Minedraft.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Minedraft.Models;
 
 public class DraftManager
 {
@@ -157,7 +157,7 @@ public class DraftManager
     public string Check(List<string> arguments)
     {
         string id = arguments[0];
-        string result = this.modelsById.ContainsKey(id) 
+        string result = this.modelsById.ContainsKey(id)
                 ? this.modelsById[id].ToString()
                 : string.Format(Constants.CheckNotFoundMessage, id);
 
@@ -166,7 +166,7 @@ public class DraftManager
 
     public string ShutDown()
     {
-        StringBuilder result = 
+        StringBuilder result =
             new StringBuilder()
             .AppendLine("System Shutdown")
             .AppendLine("Total Energy Stored: " + this.totalEnergyStored)

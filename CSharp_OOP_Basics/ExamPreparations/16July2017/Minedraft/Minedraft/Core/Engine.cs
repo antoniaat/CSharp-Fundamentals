@@ -37,18 +37,23 @@ public class Engine
             case "RegisterHarvester":
                 result = this.manager.RegisterHarvester(inputParams);
                 break;
+
             case "RegisterProvider":
                 result = this.manager.RegisterProvider(inputParams);
                 break;
+
             case "Day":
                 result = this.manager.Day();
                 break;
+
             case "Mode":
                 result = this.manager.Mode(inputParams);
                 break;
+
             case "Check":
                 result = this.manager.Check(inputParams);
                 break;
+
             case "Shutdown":
                 result = this.manager.ShutDown();
                 this.isRunning = false;
