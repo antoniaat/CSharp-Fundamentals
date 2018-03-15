@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ForumSystem.Data\ForumSystem.Data.csproj" />
+    <ProjectReference Include="..\ForumSystem.Models\ForumSystem.Models.csproj" />
+  </ItemGroup>
+
+</Project>
