@@ -11,6 +11,11 @@
     }
 
     public string Name { get; set; }
-    public int Power{ get; set; }
+    public int Power { get; set; }
     public virtual double TotalPower { get; protected set; }
+
+    public virtual string PrintBender()
+    {
+        return null;
+    }
 }

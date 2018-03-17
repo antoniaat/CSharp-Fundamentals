@@ -9,4 +9,11 @@
     }
 
     public int EarthAffinity { get; set; }
+
+    public override double TotalPower => base.TotalPower += this.EarthAffinity;
+
+    public override string PrintMonument()
+    {
+        return $"Earth Monument: {Name}, Earth Affinity: {EarthAffinity}";
+    }
 }

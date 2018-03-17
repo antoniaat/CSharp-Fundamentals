@@ -9,4 +9,11 @@
     }
 
     public int WaterAffinity { get; set; }
+
+    public override double TotalPower => base.TotalPower += this.WaterAffinity;
+
+    public override string PrintMonument()
+    {
+        return $"Water Monument: {Name}, Water Affinity: {WaterAffinity}";
+    }
 }

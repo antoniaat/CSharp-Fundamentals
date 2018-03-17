@@ -13,15 +13,22 @@ public class Engine
 
     public void Run()
     {
-        string inputLine;
-        while ((inputLine = Console.ReadLine()) != "Quit")
+        while (true)
         {
+            var inputLine = Console.ReadLine();
+
             var inputParams = inputLine
                 .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
 
             var commandResult = this.DispatchCommand(inputParams);
-            if (commandResult != null) Console.WriteLine(commandResult);
+            if (commandResult != null) Console.Write(commandResult);
+
+            if (inputLine == "Quit")
+            {
+                Console.Write(this.nation.WarsResult.ToString());
+                return;
+            }
         }
     }
 
@@ -43,11 +50,11 @@ public class Engine
                 break;
 
             case "Status":
-                //   result = this.nation.Day();
+                result = this.nation.GetStatus(inputParams[0]);
                 break;
 
             case "War":
-                // result = this.nation.Mode(inputParams);
+                this.nation.IssueWar(inputParams[0]);
                 break;
         }
 

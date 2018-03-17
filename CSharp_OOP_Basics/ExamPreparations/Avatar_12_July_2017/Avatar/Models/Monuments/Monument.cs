@@ -1,4 +1,6 @@
-﻿public abstract class Monument
+﻿using System;
+
+public abstract class Monument
 {
     private string name;
     private double totalPower;
@@ -9,6 +11,11 @@
         this.TotalPower = 0.0;
     }
 
-    public string Name{ get; set; }
+    public string Name { get; set; }
     public virtual double TotalPower { get; protected set; }
+
+    public virtual string PrintMonument()
+    {
+        return string.Empty;
+    }
 }
