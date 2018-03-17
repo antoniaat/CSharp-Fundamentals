@@ -55,7 +55,6 @@
     <Compile Include="Models\Monuments\FireMonument.cs" />
     <Compile Include="Models\Monuments\Monument.cs" />
     <Compile Include="Models\Monuments\WaterMonument.cs" />
-    <Compile Include="Nation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

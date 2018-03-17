@@ -46,7 +46,6 @@ public class NationsBuilder
 
             Benders["Air"].Add(new AirBender(name, power, secondaryParameter));
         }
-
         else if (type == "Earth")
         {
             if (!Benders.ContainsKey("Earth"))
@@ -159,7 +158,7 @@ public class NationsBuilder
 
                 foreach (var monument in kvp.Value)
                 {
-                   result.AppendLine($"###{monument.PrintMonument()}");
+                    result.AppendLine($"###{monument.PrintMonument()}");
                 }
             }
         }

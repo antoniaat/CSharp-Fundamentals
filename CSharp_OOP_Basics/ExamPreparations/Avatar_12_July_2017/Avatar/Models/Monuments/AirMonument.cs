@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-public class AirMonument : Monument
+﻿public class AirMonument : Monument
 {
     private int airAffinity;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-public abstract class Monument
+﻿public abstract class Monument
 {
     private string name;
     private double totalPower;
