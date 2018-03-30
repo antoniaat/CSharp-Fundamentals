@@ -11,10 +11,10 @@
 	.NET Version: 2.1.4
 ------------------------------------------------------------------------------*/
 
-using System;
-using System.Collections.Generic;
 using Logger.Factory;
 using Logger.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace Logger
 {
@@ -28,7 +28,7 @@ namespace Logger
             engine.Run();
         }
 
-        static ILogger InitializeLogger()
+        private static ILogger InitializeLogger()
         {
             ICollection<IAppender> appenders = new List<IAppender>();
             LayoutFactory layoutFactory = new LayoutFactory();

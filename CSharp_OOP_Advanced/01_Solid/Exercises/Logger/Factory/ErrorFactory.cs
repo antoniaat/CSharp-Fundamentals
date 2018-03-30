@@ -1,7 +1,7 @@
-﻿using System;
-using System.Globalization;
-using Logger.Interfaces;
+﻿using Logger.Interfaces;
 using Logger.Loggers;
+using System;
+using System.Globalization;
 
 namespace Logger.Factory
 {

@@ -1,7 +1,7 @@
-﻿using System;
-using Logger.Appenders;
+﻿using Logger.Appenders;
 using Logger.Interfaces;
 using Logger.Loggers;
+using System;
 
 namespace Logger.Factory
 {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Logger.Interfaces;
+using System;
 using System.IO;
 using System.Linq;
-using Logger.Interfaces;
 
 public class LogFile : ILogFile
 {

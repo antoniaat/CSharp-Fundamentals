@@ -1,6 +1,6 @@
-﻿using System;
-using Logger.Interfaces;
+﻿using Logger.Interfaces;
 using Logger.Loggers;
+using System;
 
 namespace Logger
 {

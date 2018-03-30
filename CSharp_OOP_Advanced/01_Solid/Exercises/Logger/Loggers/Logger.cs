@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Logger.Interfaces;
+using System;
 using System.Collections.Generic;
-using Logger.Interfaces;
 
 namespace Logger.Loggers
 {
@@ -10,7 +10,7 @@ namespace Logger.Loggers
 
         public Logger(IAppender appender)
         {
-            this.appenders = new List<IAppender> {appender};
+            this.appenders = new List<IAppender> { appender };
         }
 
         public Logger(IEnumerable<IAppender> appenders)
@@ -18,7 +18,7 @@ namespace Logger.Loggers
             this.appenders = appenders;
         }
 
-        public IReadOnlyCollection<IAppender> Appenders => (IReadOnlyCollection<IAppender>) this.appenders;
+        public IReadOnlyCollection<IAppender> Appenders => (IReadOnlyCollection<IAppender>)this.appenders;
 
         public void Log(IError error)
         {
