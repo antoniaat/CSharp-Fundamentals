@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23398DA0-180F-453D-AFB1-FF37390AC9AA}</ProjectGuid>
+    <ProjectGuid>{11D15600-A1C6-4A13-964E-E818FABF087B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ArgsTest</RootNamespace>
-    <AssemblyName>ArgsTest</AssemblyName>
+    <RootNamespace>Logger</RootNamespace>
+    <AssemblyName>Logger</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,14 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,12 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Appenders\FileAppender.cs" />
+    <Compile Include="Appenders\ConsoleAppender.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Factory\AppenderFactory.cs" />
+    <Compile Include="Factory\ErrorFactory.cs" />
+    <Compile Include="Factory\LayoutFactory.cs" />
+    <Compile Include="Interfaces\IAppender.cs" />
+    <Compile Include="Interfaces\IError.cs" />
+    <Compile Include="Interfaces\ILevealble.cs" />
+    <Compile Include="Interfaces\ILogFile.cs" />
+    <Compile Include="Interfaces\ILayout.cs" />
+    <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Launcher.cs" />
+    <Compile Include="Layouts\Layout.cs" />
+    <Compile Include="Layouts\SimpleLayout.cs" />
+    <Compile Include="Layouts\XmlLayout.cs" />
+    <Compile Include="Loggers\LogFile.cs" />
+    <Compile Include="Loggers\Logger.cs" />
+    <Compile Include="Loggers\ErrorLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
