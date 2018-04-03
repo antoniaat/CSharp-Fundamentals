@@ -1,6 +1,6 @@
-﻿using System;
-using Logger.Interfaces;
+﻿using Logger.Interfaces;
 using Logger.Layouts;
+using System;
 
 namespace Logger.Factory
 {
@@ -20,7 +20,7 @@ namespace Logger.Factory
                     layout = new XmlLayout();
                     break;
 
-                default:    
+                default:
                     throw new ArgumentException("Invalid Layout Type!");
             }
 

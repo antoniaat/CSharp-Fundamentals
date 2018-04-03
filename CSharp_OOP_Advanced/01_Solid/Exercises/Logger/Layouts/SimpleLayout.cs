@@ -1,6 +1,5 @@
-﻿using System.Globalization;
-using System.Runtime.Remoting.Messaging;
-using Logger.Interfaces;
+﻿using Logger.Interfaces;
+using System.Globalization;
 
 namespace Logger.Layouts
 {
@@ -8,12 +7,13 @@ namespace Logger.Layouts
     {
         // error.DateTime - error.Level - error.Message
         private const string DateFormat = "M/d/yyyy h:mm:ss tt";
+
         private const string Format = "{0} - {1} - {2}";
 
         public string FormatError(IError error)
         {
             string dateString = error.DateTime.ToString(DateFormat, CultureInfo.InvariantCulture);
-            string formattedError = string.Format(Format, dateString, error.Level.ToString(),error.Message);
+            string formattedError = string.Format(Format, dateString, error.Level.ToString(), error.Message);
 
             return formattedError;
         }
