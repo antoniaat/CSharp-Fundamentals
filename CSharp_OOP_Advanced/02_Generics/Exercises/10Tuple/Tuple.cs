@@ -1,6 +1,4 @@
-﻿using System;
-
-public class Tuple
+﻿public class Tuple
 {
     //private object item1;
     //private object item2;

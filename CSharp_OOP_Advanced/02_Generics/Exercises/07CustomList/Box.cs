@@ -82,7 +82,7 @@ public class Box<T>
 
     public void Sort()
     {
-        Array.Sort(this.data, 0 , this.Count);
+        Array.Sort(this.data, 0, this.Count);
     }
 
     public override string ToString()

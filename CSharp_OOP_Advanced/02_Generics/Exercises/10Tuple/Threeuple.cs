@@ -5,5 +5,5 @@
         this.Item3 = item3;
     }
 
-    public object Item3{ get; set; }
+    public object Item3 { get; set; }
 }
