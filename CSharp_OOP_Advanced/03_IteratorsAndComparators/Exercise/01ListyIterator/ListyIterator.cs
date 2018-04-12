@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-public class ListyIterator<T> : IEnumerator<T>
+public class ListyIterator<T> : IEnumerator<T>, IEnumerable<string>
 {
     public int CurrentIndex { get; set; }
 
@@ -27,7 +28,9 @@ public class ListyIterator<T> : IEnumerator<T>
 
     object IEnumerator.Current => Current;
 
-    public void Dispose() { }
+    public void Dispose()
+    {
+    }
 
     public bool HasNext() => CurrentIndex != List.Count - 1;
 
@@ -44,5 +47,22 @@ public class ListyIterator<T> : IEnumerator<T>
         }
 
         return this.List[CurrentIndex];
+    }
+
+    public string PrintAll()
+    {
+        return new StringBuilder()
+            .Append(string.Join(" ", this.List))
+            .ToString();
+    }
+
+    public IEnumerator<string> GetEnumerator()
+    {
+        return ((IEnumerable<string>)this.List).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return this.GetEnumerator();
     }
 }

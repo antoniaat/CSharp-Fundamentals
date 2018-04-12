@@ -9,7 +9,7 @@ public class StartUp
         string inputLine;
         while ((inputLine = Console.ReadLine()) != "END")
         {
-            var tokens = inputLine?.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = inputLine?.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             DispatchCommands(tokens);
         }
     }
@@ -20,12 +20,10 @@ public class StartUp
         {
             List.Create(tokens);
         }
-
         else if (tokens[0] == "Move")
         {
             Console.WriteLine(List.MoveNext());
         }
-            
         else if (tokens[0] == "Print")
         {
             try
@@ -37,10 +35,13 @@ public class StartUp
                 Console.WriteLine(exception.Message);
             }
         }
-
         else if (tokens[0] == "HasNext")
         {
             Console.WriteLine(List.HasNext());
+        }
+        else if (tokens[0] == "PrintAll")
+        {
+            Console.WriteLine(List.PrintAll());
         }
     }
 }
