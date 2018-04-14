@@ -1,4 +1,5 @@
-﻿using DungeonsAndCodeWizards.Models.Characters;
+﻿using DungeonsAndCodeWizards.Models;
+using DungeonsAndCodeWizards.Models.Characters;
 
 namespace DungeonsAndCodeWizards.Model
 {

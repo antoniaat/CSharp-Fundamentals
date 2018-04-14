@@ -17,8 +17,9 @@ namespace DungeonsAndCodeWizards
 
                 if (string.IsNullOrEmpty(inputLine)) break;
                  
-                var inputParams = inputLine.Split().ToArray();
+                var inputParams = inputLine.Split().ToList();
                 string command = inputParams[0];
+                inputParams.RemoveAt(0);
 
                 string result = null;
 
@@ -27,26 +28,26 @@ namespace DungeonsAndCodeWizards
                     switch (command)
                     {
                         case "JoinParty":
-                            result = dungeon.JoinParty(inputParams);
+                            result = dungeon.JoinParty(inputParams.ToArray());
                             break;
 
                         case "AddItemToPool":
-                            result = dungeon.AddItemToPool(inputParams);
+                            result = dungeon.AddItemToPool(inputParams.ToArray());
                             break;
                         case "PickUpItem":
-                            result = dungeon.PickUpItem(inputParams);
+                            result = dungeon.PickUpItem(inputParams.ToArray());
                             break;
 
                         case "UseItem":
-                            result = dungeon.UseItem(inputParams);
+                            result = dungeon.UseItem(inputParams.ToArray());
                             break;
 
                         case "UseItemOn":
-                            result = dungeon.UseItemOn(inputParams);
+                            result = dungeon.UseItemOn(inputParams.ToArray());
                             break;
 
                         case "GiveCharacterItem":
-                            result = dungeon.GiveCharacterItem(inputParams);
+                            result = dungeon.GiveCharacterItem(inputParams.ToArray());
                             break;
 
                         case "GetStats":
@@ -54,15 +55,15 @@ namespace DungeonsAndCodeWizards
                             break;
 
                         case "Attack":
-                            result = dungeon.Attack(inputParams);
+                            result = dungeon.Attack(inputParams.ToArray());
                             break;
 
                         case "Heal":
-                            result = dungeon.Heal(inputParams);
+                            result = dungeon.Heal(inputParams.ToArray());
                             break;
 
                         case "EndTurn":
-                            result = dungeon.EndTurn(inputParams);
+                            result = dungeon.EndTurn(inputParams.ToArray());
                             break;
 
                         case "IsGameOver":

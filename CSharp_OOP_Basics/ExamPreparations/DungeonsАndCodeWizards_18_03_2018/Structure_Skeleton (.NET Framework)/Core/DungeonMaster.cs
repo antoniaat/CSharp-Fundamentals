@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.XPath;
 using DungeonsAndCodeWizards.Model;
 using DungeonsAndCodeWizards.Models;
 using DungeonsAndCodeWizards.Models.Characters;
@@ -11,33 +10,25 @@ namespace DungeonsAndCodeWizards.Core
 {
     public class DungeonMaster
     {
+        public List<Character> Party { get; set; }
+
+        public List<Item> Pool = new List<Item>();
+
+        public int LastSurvivor;
 
         public DungeonMaster()
         {
             this.Party = new List<Character>();
         }
 
-        public List<Character> Party { get; set; }
-
-       // public List<Character> party = new List<Character>();
-        public List<Item> pool = new List<Item>();
-        public int lastSurvivor = 0;
-
         public string JoinParty(string[] args)
         {
-            var faction = args[1];
-            var characterType = args[2];
-            var name = args[3];
+            var faction = args[0];
+            var characterType = args[1];
+            var name = args[2];
 
-            try
-            {
-                Character character = CreateCharacter(faction, characterType, name);
-                Party.Add(character);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Character character = CreateCharacter(faction, characterType, name);
+            Party.Add(character);
 
             return $"{name} joined the party!";
         }
@@ -48,12 +39,14 @@ namespace DungeonsAndCodeWizards.Core
 
             if (characterType == "Warrior")
             {
-                character = new Warrior(name, new Faction(faction));
+                character = CreateWarriorCharacter(faction, name);
             }
+
             else if (characterType == "Cleric")
             {
-                character = new Cleric(name, new Faction(faction));
+                character = CreateClericCharacter(faction, name);
             }
+
             else
             {
                 throw new ArgumentException($"Invalid character type {characterType}");
@@ -62,115 +55,134 @@ namespace DungeonsAndCodeWizards.Core
             return character;
         }
 
+        private Character CreateClericCharacter(string faction, string name)
+        {
+            Character character;
+
+            if (faction == Faction.CSharp.ToString())
+            {
+                character = new Cleric(name, Faction.CSharp);
+            }
+            else if (faction == Faction.Java.ToString())
+            {
+                character = new Cleric(name, Faction.Java);
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid faction \"{faction}\"!");
+            }
+
+            return character;
+        }
+
+        private Character CreateWarriorCharacter(string faction, string name)
+        {
+            Character character;
+
+            if (faction == Faction.CSharp.ToString())
+            {
+                character = new Warrior(name, Faction.CSharp);
+            }
+            else if (faction == Faction.Java.ToString())
+            {
+                character = new Warrior(name, Faction.Java);
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid faction \"{faction}\"!");
+            }
+
+            return character;
+        }
+
         public string AddItemToPool(string[] args)
         {
-            var itemName = args[1];
+            var itemName = args[0];
 
-            try
+            if (itemName == "ArmorRepairKit")
             {
-                if (itemName == "ArmorRepairKit")
-                {
-                    pool.Add(new ArmorRepairKit());
-                }
-                else if (itemName == "HealthPotion")
-                {
-                    pool.Add(new HealthPotion());
-                }
-                else if (itemName == "PoisonPotion")
-                {
-                    pool.Add(new PoisonPotion());
-                }
-                else
-                {
-                    throw new ArgumentException($"Invalid item \"{ itemName}\"!");
-                }
+                Pool.Add(new ArmorRepairKit());
             }
-            catch (Exception ex)
+            else if (itemName == "HealthPotion")
             {
-                return ex.Message;
+                Pool.Add(new HealthPotion());
+            }
+            else if (itemName == "PoisonPotion")
+            {
+                Pool.Add(new PoisonPotion());
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid item \"{ itemName}\"!");
             }
 
-            return $"{itemName} added to pool.";
+            return $"{itemName} added to Pool.";
         }
 
         public string PickUpItem(string[] args)
         {
-            var characterName = args[1];
+            var characterName = args[0];
 
             if (Party.Count(x => x.Name == characterName) == 0)
             {
                 throw new ArgumentException($"Character {characterName} not found!");
             }
 
-            if (pool.Count == 0)
+            if (Pool.Count == 0)
             {
-                throw new InvalidOperationException($"No items left in pool!");
+                throw new InvalidOperationException($"No items left in Pool!");
             }
 
-            var item = pool.Last();
+            var item = Pool.Last();
 
-            Party.First(x => x.Name == characterName).Bag.AddItem(item); // Add last item to the bag
-            pool.RemoveAt(pool.Count - 1);
+            Party.FirstOrDefault(x => x.Name == characterName)?.Bag.AddItem(item); // Add last item to the bag
+            Pool.RemoveAt(Pool.Count - 1);
 
             return $"{characterName} picked up {item.GetType().Name}";
         }
 
         public string UseItem(string[] args)
         {
-            var characterName = args[1];
-            var itemName = args[2];
-
-            var character = Party.First(x => x.Name == characterName);
-            character.Bag.Items.First(x => x.GetType().Name == itemName).AffectCharacter(character);
+            var characterName = args[0];
+            var itemName = args[1];
+            Character character = Party.FirstOrDefault(x => x.Name == characterName);
 
             if (character == null)
             {
                 throw new ArgumentException($"Character {characterName} not found!");
             }
 
-            return $"{characterName} used {itemName}";
+            Item characterItem = character.Bag.Items.FirstOrDefault(x => x.GetType().Name == itemName);
+            character.UseItem(characterItem);
+
+            return $"{characterName} used {itemName}.";
         }
 
         public string UseItemOn(string[] args)
         {
-            var giverName = args[1];
-            var receiverName = args[2];
-            var itemName = args[3];
+            var giverName = args[0];
+            var receiverName = args[1];
+            var itemName = args[2];
 
-            try
-            {
-                var giver = Party.FirstOrDefault(x => x.Name == giverName);
-                var receiver = Party.FirstOrDefault(x => x.Name == receiverName);
-                var item = giver.Bag.Items.First(x => x.GetType().Name == itemName);
-
-                receiver.UseItemOn(item, giver);
-            }
-            catch (Exception ex)
-            {
-                // ignored
-            }
+            var giver = Party.FirstOrDefault(x => x.Name == giverName);
+            var receiver = Party.FirstOrDefault(x => x.Name == receiverName);
+            var item = giver?.Bag.Items.First(x => x.GetType().Name == itemName);
+            receiver?.UseItemOn(item, giver);
 
             return $"{giverName} used {itemName} on {receiverName}.";
         }
 
         public string GiveCharacterItem(string[] args)
         {
-            var giverName = args[1];
-            var receiverName = args[2];
-            var itemName = args[3];
+            var giverName = args[0];
+            var receiverName = args[1];
+            var itemName = args[2];
 
-            try
-            {
-                var giver = Party.FirstOrDefault(x => x.Name == giverName);
-                var receiver = Party.FirstOrDefault(x => x.Name == receiverName);
-                var item = giver.Bag.Items.First(x => x.GetType().Name == itemName);
+            var giver = Party.FirstOrDefault(x => x.Name == giverName);
+            var receiver = Party.FirstOrDefault(x => x.Name == receiverName);
+            var item = giver?.Bag.Items.First(x => x.GetType().Name == itemName);
 
-                giver.GiveCharacterItem(item, receiver);
-            }
-            catch (Exception ex)
-            {
-                // ignored
-            }
+            giver?.GiveCharacterItem(item, receiver);
 
             return $"{giverName} gave {receiverName} {itemName}.";
         }
@@ -179,7 +191,9 @@ namespace DungeonsAndCodeWizards.Core
         {
             var result = new StringBuilder();
 
-            foreach (var character in Party.OrderByDescending(x => x.IsAlive == false).ThenByDescending(x => x.Health))
+            foreach (var character in Party
+                .OrderByDescending(x => x.IsAlive)
+                .ThenByDescending(x => x.Health))
             {
                 result.AppendLine(character.ToString());
             }
@@ -189,35 +203,45 @@ namespace DungeonsAndCodeWizards.Core
 
         public string Attack(string[] args)
         {
-            var attackerName = args[1];
-            var receiverName = args[2];
+            var attackerName = args[0];
+            var receiverName = args[1];
 
             var attacker = Party.FirstOrDefault(x => x.Name == attackerName);
             var receiver = Party.FirstOrDefault(x => x.Name == receiverName);
 
-            if (receiver == null)
+            if (receiver == null || attacker == null)
             {
-                throw new ArgumentException($"{attacker.Name} cannot attack!");
+                throw new ArgumentException($"{attacker?.Name} cannot attack!");
             }
 
-            attacker.Attack(receiver);
+            if (attacker is Warrior warrior)
+            {
+                warrior.Attack(receiver);
+            }
 
+            return PrintAttack(attacker, attackerName, receiver, receiverName);
+        }
+
+        private string PrintAttack(Character attacker, string attackerName, Character receiver, string receiverName)
+        {
             var result = new StringBuilder();
 
             result.AppendLine($"{attackerName} attacks {receiverName} for {attacker.AbilityPoints} hit points! " +
-                        $"{receiverName} has {receiver.Health}/{receiver.BaseHealth} HP and {receiver.Armor}/{receiver.BaseArmor} AP left!");
+                              $"{receiverName} has {receiver.Health}/{receiver.BaseHealth} HP and {receiver.Armor}" +
+                              $"/{receiver.BaseArmor} AP left!");
 
             if (receiver.IsAlive == false)
             {
                 result.AppendLine($"{receiver.Name} is dead!");
             }
+
             return result.ToString();
         }
 
         public string Heal(string[] args)
         {
-            var healerName = args[1];
-            var healingReceiverName = args[2];
+            var healerName = args[0];
+            var healingReceiverName = args[1];
 
             var healer = Party.FirstOrDefault(x => x.Name == healerName);
             var receiver = Party.FirstOrDefault(x => x.Name == healingReceiverName);
@@ -227,8 +251,16 @@ namespace DungeonsAndCodeWizards.Core
                 throw new ArgumentException($"{healerName} cannot heal!");
             }
 
-            healer.Heal(receiver);
+            if (healer is Cleric)
+            {
+                ((Cleric)healer).Heal(receiver);
+            }
 
+            return PrintHealing(healer, receiver);
+        }
+
+        private string PrintHealing(Character healer, Character receiver)
+        {
             var result = new StringBuilder();
 
             result.AppendLine($"{healer.Name} heals {receiver.Name} for {healer.AbilityPoints}! " +
@@ -238,6 +270,7 @@ namespace DungeonsAndCodeWizards.Core
             {
                 result.AppendLine($"{healer.Name} cannot heal!");
             }
+
             return result.ToString();
         }
 
@@ -249,14 +282,14 @@ namespace DungeonsAndCodeWizards.Core
             {
                 if (per.IsAlive == false)
                 {
-                    per.Rest(); 
+                    per.Rest();
                     result.AppendLine($"{per.Name} rests ({per.BaseHealth} => {per.Health})");
                 }
             }
 
-            if (Party.Count(x => x.IsAlive == false) == 1)
+            if (Party.Count(x => x.IsAlive) == 1 || Party.Count(x => x.IsAlive) == 0)
             {
-                lastSurvivor++;
+                LastSurvivor++;
             }
 
             return result.ToString();
@@ -264,7 +297,7 @@ namespace DungeonsAndCodeWizards.Core
 
         public bool IsGameOver()
         {
-            return lastSurvivor == 1;
+            return LastSurvivor == 1;
         }
     }
 }

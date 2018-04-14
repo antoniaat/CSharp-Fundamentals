@@ -1,37 +1,31 @@
 ﻿using System;
-using DungeonsAndCodeWizards.Intefaces;
-using DungeonsAndCodeWizards.Model;
 using DungeonsAndCodeWizards.Model.Bags;
 
 namespace DungeonsAndCodeWizards.Models.Characters
 {
-    public abstract class Character : IAttackable, IHealable
+    public abstract class Character
     {
         private string name;
+
         private double baseHealth;
+
         private double health;
-        private double baseArmor;
+
         private double armor;
+
         private double abilityPoints;
+
         private Bag bag;
+
         private Faction faction;
+
         private bool isAlive = true;
-        private double restHealMultiplier;
 
-        //protected Character(string name, double health, double armor, double abilityPoints, Bag bag, Faction faction)
-        //{
-        //    this.Name = name;
-        //    this.BaseHealth = health;
-        //    this.BaseArmor = armor;
-        //    this.AbilityPoints = abilityPoints;
-        //    this.Bag = bag;
-        //    this.Faction = faction;
-        //}
-
-        protected Character(string name, Faction faction) // Warior , Cleric
+        protected Character(string name, Faction faction)
         {
             this.Name = name;
-            this.BaseHealth = health;
+            this.BaseHealth = baseHealth;
+            this.Health = health;
             this.BaseArmor = armor;
             this.AbilityPoints = abilityPoints;
             this.Bag = bag;
@@ -98,7 +92,20 @@ namespace DungeonsAndCodeWizards.Models.Characters
 
         public Bag Bag { get; set; }
 
-        public Faction Faction { get; protected set; }
+        public Faction Faction
+        {
+            get => this.faction;
+
+            protected set
+            {
+                if (value != Faction.CSharp && value != Faction.Java)
+                {
+                    throw new ArgumentException($"Invalid faction {value}");
+                }
+
+                this.faction = value;
+            }
+        }
 
         public bool IsAlive { get; set; }
 
@@ -108,13 +115,11 @@ namespace DungeonsAndCodeWizards.Models.Characters
         {
             if (IsAlive)
             {
-                // Taking damage
-
                 if (this.Armor - hitPoints < 0)
                 {
-                    var diff = this.Armor -= hitPoints;
-                    this.Armor -= hitPoints + diff;
+                    var diff = hitPoints - this.Armor;
                     this.Health -= diff;
+                    this.Armor = 0;
                 }
 
                 else
@@ -131,7 +136,10 @@ namespace DungeonsAndCodeWizards.Models.Characters
 
         public void Rest()
         {
-            this.Health += BaseHealth * RestHealMultiplier;
+            if (IsAlive)
+            {
+                this.Health += BaseHealth * RestHealMultiplier;
+            }
         }
 
         public void UseItem(Item item)
@@ -141,17 +149,14 @@ namespace DungeonsAndCodeWizards.Models.Characters
                 throw new InvalidOperationException("Must be alive to perform this action!");
             }
 
-            //if (!IsAlive)
-            //{
-            //   // item.AffectCharacter();
-            //}
+            item.AffectCharacter(this);
         }
 
         public void UseItemOn(Item item, Character character)
         {
             //For a character to use an item on another character, both of them need to be alive.
 
-            if (IsAlive && character.IsAlive)
+            if (this.IsAlive && character.IsAlive)
             {
                 item.AffectCharacter(character);
             }
@@ -159,10 +164,9 @@ namespace DungeonsAndCodeWizards.Models.Characters
 
         public void GiveCharacterItem(Item item, Character character)
         {
-            // For a character to give another character an item, both of them need to be alive.
             // The targeted character receives the item.
 
-            if (IsAlive && character.IsAlive)
+            if (this.IsAlive && character.IsAlive)
             {
                 character.ReceiveItem(item);
             }
@@ -170,9 +174,9 @@ namespace DungeonsAndCodeWizards.Models.Characters
 
         public void ReceiveItem(Item item)
         {
-            if (IsAlive)
+            if (this.IsAlive)
             {
-                this.Bag.Items.Add(item);
+                this.Bag.AddItem(item);
             }
         }
 
@@ -181,39 +185,6 @@ namespace DungeonsAndCodeWizards.Models.Characters
             var status = isAlive ? "Alive" : "Dead";
 
             return $"{Name} - HP: {Health}/{BaseHealth}, AP: {Armor}/{BaseArmor}, Status: {status}";
-        }
-
-        public void Heal(Character character)
-        {
-            // If both of those checks pass, the receiving character’s health increases by the healer’s ability points.
-
-            if (character.IsAlive)
-            {
-                if (this.Faction == character.Faction)
-                {
-                    throw new InvalidOperationException("Cannot heal enemy character!");
-                }
-
-                character.Health += this.AbilityPoints;
-            }
-        }
-
-        public void Attack(Character character)
-        {
-            if (IsAlive && character.IsAlive)
-            {
-                if (this.Name == character.Name)
-                {
-                    throw new InvalidOperationException("Cannot attack self!");
-                }
-
-                if (this.Faction == character.Faction)
-                {
-                    throw new ArgumentException("Friendly fire! Both characters are from {faction} faction!");
-                }
-
-                this.TakeDamage(character.AbilityPoints);
-            }
         }
     }
 }

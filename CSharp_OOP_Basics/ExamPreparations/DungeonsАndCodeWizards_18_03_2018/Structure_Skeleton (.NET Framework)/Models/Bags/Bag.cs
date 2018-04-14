@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonsAndCodeWizards.Models;
 
 namespace DungeonsAndCodeWizards.Model.Bags
 {
@@ -10,12 +11,10 @@ namespace DungeonsAndCodeWizards.Model.Bags
 
         private int load;
 
-
         protected Bag(int capacity)
         {
             this.Capacity = capacity;
             this.Load = load;
-            this.Items = items;
         }
 
         public int Capacity { get; set; }
@@ -23,6 +22,7 @@ namespace DungeonsAndCodeWizards.Model.Bags
         public int Load
         {
             get => this.load;
+
             set
             {
                 value = items.Count == 0 ? 0 : Items.Sum(x => x.Weight);
@@ -31,11 +31,11 @@ namespace DungeonsAndCodeWizards.Model.Bags
             }
         }
 
-        public List<Item> Items { get; set; }
+        public IReadOnlyCollection<Item> Items => this.items;
 
         public void AddItem(Item item)
         {
-            if (this.Load + item.Weight >= this.Capacity)
+            if (this.Load + item.Weight > this.Capacity)
             {
                 throw new InvalidOperationException("Bag is full!");
             }
@@ -45,12 +45,12 @@ namespace DungeonsAndCodeWizards.Model.Bags
 
         public Item GetItem(string name)
         {
-            if (Items.Count == 0)
+            if (items.Count == 0)
             {
                 throw new InvalidOperationException("Bag is empty!");
             }
 
-            if (Items.TrueForAll(x => x.GetType().Name != "ArmorRepairKit"
+            if (items.TrueForAll(x => x.GetType().Name != "ArmorRepairKit"
                                       && x.GetType().Name != "HealthPotion"
                                       && x.GetType().Name != "PoisonPotion"))
             {
@@ -58,7 +58,7 @@ namespace DungeonsAndCodeWizards.Model.Bags
             }
 
             Item item = Items.FirstOrDefault(x => x.GetType().Name == name);
-            Items.Remove(item);
+            items.Remove(item);
             return item;
         }
     }
