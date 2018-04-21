@@ -1,26 +1,29 @@
-﻿using System;
+﻿using Skeleton.Interfaces;
+using System;
 
-// Axe durability drop with 5 
-public class Axe
+namespace Skeleton
 {
-    public Axe(int attack, int durability)
+    public class Axe : IWeapon
     {
-        this.AttackPoints = attack;
-        this.DurabilityPoints = durability;
-    }
-
-    public int AttackPoints { get; }
-
-    public int DurabilityPoints { get; private set; }
-
-    public void Attack(Dummy target)
-    {
-        if (this.DurabilityPoints <= 0)
+        public Axe(int attack, int durability)
         {
-            throw new InvalidOperationException("Axe is broken.");
+            this.AttackPoints = attack;
+            this.DurabilityPoints = durability;
         }
 
-        target.TakeAttack(this.AttackPoints);
-        this.DurabilityPoints -= 1;
+        public int AttackPoints { get; }
+
+        public int DurabilityPoints { get; private set; }
+
+        public void Attack(ITarget target)
+        {
+            if (this.DurabilityPoints <= 0)
+            {
+                throw new InvalidOperationException("Axe is broken.");
+            }
+
+            target.TakeAttack(this.AttackPoints);
+            this.DurabilityPoints -= 1;
+        }
     }
 }

@@ -1,39 +1,43 @@
-﻿using System;
+﻿using Skeleton.Interfaces;
+using System;
 
-public class Dummy
+namespace Skeleton
 {
-    private readonly int experience;
-
-    public Dummy(int health, int experience)
+    public class Dummy : ITarget
     {
-        this.Health = health;
-        this.experience = experience;
-    }
+        private int experience;
 
-    public int Health { get; private set; }
-
-    public void TakeAttack(int attackPoints)
-    {
-        if (this.IsDead())
+        public Dummy(int health, int experience)
         {
-            throw new InvalidOperationException("Dummy is dead.");
+            this.Health = health;
+            this.experience = experience;
         }
 
-        this.Health -= attackPoints;
-    }
+        public int Health { get; set; }
 
-    public int GiveExperience()
-    {
-        if (!this.IsDead())
+        public void TakeAttack(int attackPoints)
         {
-            throw new InvalidOperationException("Target is not dead.");
+            if (this.IsDead())
+            {
+                throw new InvalidOperationException("Dummy is dead.");
+            }
+
+            this.Health -= attackPoints;
         }
 
-        return this.experience;
-    }
+        public int GiveExperience()
+        {
+            if (!this.IsDead())
+            {
+                throw new InvalidOperationException("Target is not dead.");
+            }
 
-    public bool IsDead()
-    {
-        return this.Health <= 0;
+            return this.experience;
+        }
+
+        public bool IsDead()
+        {
+            return this.Health <= 0;
+        }
     }
 }
