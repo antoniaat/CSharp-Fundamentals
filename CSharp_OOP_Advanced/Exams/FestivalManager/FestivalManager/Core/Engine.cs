@@ -19,6 +19,7 @@
 		{
 			this.reader = reader;
 			this.writer = writer;
+
 			this.festivalController = festivalController;
 			this.setController = setController;
 		}
